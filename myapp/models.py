@@ -24,3 +24,17 @@ class Rating(models.Model):
     class Meta:
         unique_together = (('user', 'meal'),)
         index_together = (('user', 'meal'),)
+
+
+def nameFile(instance, filename):
+    return '/'.join(['images', str(instance.name), filename])
+
+
+class UploadImageTest(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to=nameFile, blank=True, null=True)
+
+
+class imageupload(models.Model):
+    title = models.CharField(max_length=50)
+    images = models.ImageField('images')
