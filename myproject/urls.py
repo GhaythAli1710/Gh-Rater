@@ -16,8 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from rest_framework.routers import DefaultRouter
 
+from myapp import views
+
+router = DefaultRouter()
+router.register(r'imageupload', views.Imageuploadviewset)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('myapp.urls')),
+    path('upload/', views.ImageViewSet.as_view(), name='upload'),
+    path('imageupload', include(router.urls)),
+
 ]
