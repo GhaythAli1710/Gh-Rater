@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from myapp.models import Meal, Rating, UploadImageTest, imageupload
+from myapp.models import Meal, Rating, Ghayth
 
 
 class MealSerializer(serializers.ModelSerializer):
@@ -16,16 +16,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 # uuid vs id
-class ImageSerializer(serializers.ModelSerializer):
+class GhSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UploadImageTest
-        fields = ('name', 'image')
-
-
-class imageuploadSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = imageupload
-        fields = (
-            'title',
-            'images'
-        )
+        model = Ghayth
+        fields = ['id', 'string']

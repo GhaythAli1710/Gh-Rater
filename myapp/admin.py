@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Meal, Rating, UploadImageTest
+from .models import Meal, Rating
 
 
 # Register your models here.
@@ -16,4 +16,3 @@ class RatingAdmin(admin.ModelAdmin):
 
 admin.site.register(Meal, MealAdmin)
 admin.site.register(Rating, RatingAdmin)
-admin.site.register(UploadImageTest)
