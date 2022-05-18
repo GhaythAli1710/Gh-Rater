@@ -38,3 +38,7 @@ class Rating(models.Model):
     class Meta:
         unique_together = (('user', 'meal'),)
         index_together = (('user', 'meal'),)
+
+
+class Ghayth(models.Model):
+    string = models.CharField(max_length=300000)

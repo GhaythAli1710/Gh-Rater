@@ -1,6 +1,4 @@
 from django.contrib.auth.models import User
-
-# Create your views here.
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
