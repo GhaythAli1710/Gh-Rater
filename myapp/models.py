@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
-# Create your models here.
 class Meal(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=200)
