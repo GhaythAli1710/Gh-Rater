@@ -12,7 +12,6 @@ from myapp.serializers import MealSerializer, RatingSerializer, UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
@@ -22,6 +21,22 @@ class UserViewSet(viewsets.ModelViewSet):
         token, created = Token.objects.get_or_create(user=serializer.instance)
         response = {'token': token.key}
         return Response(response, status=status.HTTP_201_CREATED)
+        # try:
+        #     if 'username' in request.data:
+        #         user = User.objects.get(username=request.data['username'], password=request.data['password'])
+        #     if 'email' in request.data:
+        #         user = User.objects.get(email=request.data['email'], password=request.data['password'])
+        #     serializer = UserSerializer(user, many=False)
+        #     token, created = Token.objects.get_or_create(user=serializer.instance)
+        #     jason = {'token': token.key}
+        #     return Response(jason, status=status.HTTP_200_OK)
+        # except:
+        #     serializer = self.get_serializer(data=request.data)
+        #     serializer.is_valid(raise_exception=True)
+        #     self.perform_create(serializer)
+        #     token, created = Token.objects.get_or_create(user=serializer.instance)
+        #     response = {'token': token.key}
+        #     return Response(response, status=status.HTTP_201_CREATED)
 
     def list(self, request, *args, **kwargs):
         response = {'message': 'you cant create rating like that'}
@@ -45,10 +60,7 @@ class MealViewSet(viewsets.ModelViewSet):
             '''
             create or update
             '''
-            # username = request.data['username']
-            # user = User.objects.get(username=username)
             user = request.user
-            # print(user)
             meal = Meal.objects.get(id=pk)
             stars = request.data['stars']
             try:
