@@ -19,7 +19,14 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         token, created = Token.objects.get_or_create(user=serializer.instance)
-        response = {'token': token.key}
+        response = {
+            'success': True,
+            'data': {
+                'token': token.key,
+                # 'name': request.data['username']
+            },
+            'message': 'user register successfully'
+        }
         return Response(response, status=status.HTTP_201_CREATED)
         # try:
         #     if 'username' in request.data:
@@ -39,8 +46,25 @@ class UserViewSet(viewsets.ModelViewSet):
         #     return Response(response, status=status.HTTP_201_CREATED)
 
     def list(self, request, *args, **kwargs):
-        response = {'message': 'you cant create rating like that'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = None
+            if 'username' in request.data:
+                user = User.objects.get(username=request.data['username'])
+            if 'email' in request.data:
+                user = User.objects.get(email=request.data['email'])
+            if user.password == request.data['password']:
+                serializer = UserSerializer(user, many=False)
+                token, created = Token.objects.get_or_create(user=serializer.instance)
+                response = {
+                    'success': {
+                        'token': token.key
+                    }
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response({'jason'}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            response = {'message': 'gh'}
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     '''
     update , delete , destroy , .....
